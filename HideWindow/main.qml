@@ -1,23 +1,37 @@
+// Copyright 2026 Scriptforge
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//     http://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
 
 Window {
+    
+    // 统一的按钮样式定义
+    property color windowBgColor: "black"
+    property color buttonNormalColor: "green"
+    property color buttonHoverColor: "lightgreen"
+    property color buttonPressedColor: "darkgreen"
+    property color textColor: "white"
+    
     id: window
     visible: true
     width: 600
     height: 400
     title: "Windows 进程隐藏工具"
-    color: "black"
+    color: windowBgColor
     
     property var selectedProcess: null
     
-    // 统一的按钮样式定义
-    property color buttonNormalColor: "green"
-    property color buttonHoverColor: "lightgreen"
-    property color buttonPressedColor: "darkgreen"
-    property color buttonTextColor: "white"
+    
     
     Button {
         id: refreshBtn
@@ -28,7 +42,7 @@ Window {
         }
         contentItem: Text {
             text: parent.text
-            color: buttonTextColor
+            color: textColor
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -59,7 +73,7 @@ Window {
         }
         contentItem: Text {
             text: parent.text
-            color: buttonTextColor
+            color: textColor
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -96,7 +110,7 @@ Button {
         }
         contentItem: Text {
             text: parent.text
-            color: buttonTextColor
+            color: textColor
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -134,7 +148,7 @@ Button {
         }
         contentItem: Text {
             text: parent.text
-            color: buttonTextColor
+            color: textColor
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -197,7 +211,7 @@ Button {
                     anchors.left: parent.left
                     anchors.leftMargin: 10
                     text: name + " (PID: " + pid + ")"
-                    color: selectedProcess === model ? "green" : "white"
+                    color: selectedProcess === model ? buttonNormalColor : textColor
                     font.pixelSize: 14
                 }
                 
@@ -218,22 +232,23 @@ Button {
             horizontalCenter: parent.horizontalCenter
             bottomMargin: 10
         }
-        color: "white"
+        color: textColor
         text: "Copyright © 2026 Scriptforge "
     }
     
     Window {
         id: unselectedProcess
         visible: false
-        title: "提示"
-        color: "black"
-        modality: Qt.ApplicationModal
-        
         width: 300
         height: 150
+        title: "提示"
+        color: windowBgColor
+        modality: Qt.ApplicationModal
+        
+        
         
         Text {
-            color: "white"
+            color: textColor
             text: "请先选择一个进程"
             font.pixelSize: 30
             anchors {
@@ -246,10 +261,11 @@ Button {
 
     Window {
         id: setHideWindow
+        visible: false  // 初始不可见
         width: 300
         height: 200
-        visible: false  // 初始不可见
         title: "弹出的新窗口"
+        color: windowBgColor
         modality: Qt.ApplicationModal
         
         // 新窗口内容
@@ -258,6 +274,7 @@ Button {
             spacing: 20
             
             Text {
+                color: textColor
                 text: selectedProcess ? "当前选中进程: " + selectedProcess.name : "未选中任何进程"
                 font.pixelSize: 18
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -265,6 +282,18 @@ Button {
             
             Button {
                 text: "关闭窗口"
+                background: Rectangle {
+                    color: parent.pressed ? buttonPressedColor :
+                    parent.hovered ? buttonHoverColor : buttonNormalColor
+                    radius: 10
+                }
+                contentItem: Text {
+                    text: parent.text
+                    color: textColor
+                    font.bold: true
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     setHideWindow.visible = false;
