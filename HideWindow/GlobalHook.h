@@ -15,13 +15,13 @@
 #include <QKeySequence>
 #include <QMutex>
 #include <QDebug>
+#include <QMap>
 #include <windows.h>
 
 // 前置声明私有实现类
 class GlobalHookPrivate;
 
-class GlobalHook : public QObject
-{
+class GlobalHook : public QObject {
     Q_OBJECT
 
 public:
@@ -51,15 +51,14 @@ private:
     // Qt PIMPL宏（必须放在私有成员最后）
     Q_DECLARE_PRIVATE(GlobalHook)
 
-        // 静态钩子回调函数（Win32要求静态）
-        static LRESULT CALLBACK lowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
+    // 静态钩子回调函数（Win32要求静态）
+    static LRESULT CALLBACK lowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
     // 静态实例指针（C++11/14兼容：类内声明，类外初始化）
     static GlobalHook* s_instance;
 };
 
 // 私有实现类定义
-class GlobalHookPrivate
-{
+class GlobalHookPrivate {
 public:
     GlobalHookPrivate()
         : hookHandle(nullptr)
@@ -74,4 +73,31 @@ public:
     QMutex mutex;              // 线程安全锁
 };
 
+static const QMap<DWORD, Qt::Key> vkToQtKey {
+    { VK_F1,Qt::Key_F1 },
+    { VK_F2,Qt::Key_F2 },
+    { VK_F3,Qt::Key_F3 },
+    { VK_F4,Qt::Key_F4 },
+    { VK_F5,Qt::Key_F5 },
+    { VK_F6,Qt::Key_F6 },
+    { VK_F7,Qt::Key_F7 },
+    { VK_F8,Qt::Key_F8 },
+    { VK_F9,Qt::Key_F9 },
+    { VK_F10,Qt::Key_F10 },
+    { VK_F11,Qt::Key_F11 },
+    { VK_F12,Qt::Key_F12 },
+    { VK_F13,Qt::Key_F13 },
+    { VK_F14,Qt::Key_F14 },
+    { VK_F15,Qt::Key_F15 },
+    { VK_F16,Qt::Key_F16 },
+    { VK_F17,Qt::Key_F17 },
+    { VK_F18,Qt::Key_F18 },
+    { VK_F19,Qt::Key_F19 },
+    { VK_F20,Qt::Key_F20 },
+    { VK_F21,Qt::Key_F21 },
+    { VK_F22,Qt::Key_F22 },
+    { VK_F23,Qt::Key_F23 },
+    { VK_F24,Qt::Key_F24 },
+    { NULL, Qt::Key_unknown }
+};
 #endif

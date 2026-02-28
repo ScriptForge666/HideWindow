@@ -25,8 +25,8 @@ LRESULT CALLBACK GlobalHook::lowLevelKeyboardProc(int nCode, WPARAM wParam, LPAR
         // 只处理按键按下事件
         if (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) {
             KBDLLHOOKSTRUCT* pKeyStruct = reinterpret_cast<KBDLLHOOKSTRUCT*>(lParam);
-            // Win32虚拟键码转Qt::Key（数值兼容）
-            Qt::Key qtKey = static_cast<Qt::Key>(pKeyStruct->vkCode);
+            // Win32虚拟键码转Qt::Key
+            Qt::Key qtKey = vkToQtKey.value(pKeyStruct->vkCode);
 
             // 检测到目标按键，发射信号
             if (qtKey == d->targetKey) {
@@ -65,6 +65,11 @@ void GlobalHook::setGlobalHook(Qt::Key key) {
     // 先停止已有激活的钩子
     if (d->isHookActive) {
         stopGlobalHook();
+    }
+
+    if (vkToQtKey.value(key, static_cast<Qt::Key>(NULL)) == NULL) {
+        qDebug() << "不支持的按键";
+        return;
     }
 
     // 设置目标按键

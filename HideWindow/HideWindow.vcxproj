@@ -20,7 +20,12 @@
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
     <ClCompile Include="ProcessListModel.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GlobalHook.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="main.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9489D7FF-B429-4601-B13C-91C8E18714C6}</ProjectGuid>
@@ -63,13 +71,13 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>msvc2022 6.10.2</QtInstall>
-    <QtModules>core;qml;quick</QtModules>
+    <QtModules>core;qml;quick;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
     <QtQMLDebugEnable>true</QtQMLDebugEnable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>msvc2022 6.10.2</QtInstall>
-    <QtModules>core;qml;quick</QtModules>
+    <QtModules>core;qml;quick;widgets</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
