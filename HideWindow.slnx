@@ -2,6 +2,5 @@
   <Configurations>
     <Platform Name="x64" />
   </Configurations>
-  <Project Path="Global Hook/Global Hook.vcxproj" Id="62dc4e13-e4e2-4d70-81a1-54d3fb5d4e3d" />
   <Project Path="HideWindow/HideWindow.vcxproj" Id="9489d7ff-b429-4601-b13c-91c8e18714c6" />
 </Solution>

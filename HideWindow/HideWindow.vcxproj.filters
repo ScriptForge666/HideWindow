@@ -26,12 +26,18 @@
     <QtMoc Include="ProcessListModel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="GlobalHook.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProcessListModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
